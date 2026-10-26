@@ -57,3 +57,21 @@ self-report:
 correlational:
   definition: "Showing that two things vary together, without establishing that either one causes the other."
   aliases: [correlates, correlate, correlation]
+
+tumour suppressor gene:
+  definition: "A gene whose normal job is to stop cells dividing out of control, so losing it raises cancer risk."
+  aliases: [tumor suppressor gene, tumour suppressor genes, tumor suppressor genes]
+
+retrogene:
+  definition: "An extra copy of a gene made when its message was copied back into the DNA, which may or may not still work."
+  aliases: [retrogenes]
+
+apoptosis:
+  definition: "A built-in process by which a cell deliberately kills itself, often when it is damaged."
+
+neoplasia:
+  definition: "Abnormal tissue growth, which includes both harmless tumours and cancers."
+
+comparative study:
+  definition: "Research that looks for patterns across many species at once rather than experimenting on one."
+  aliases: [comparative studies]
