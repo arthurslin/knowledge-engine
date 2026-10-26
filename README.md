@@ -85,13 +85,38 @@ page. If you later move to a custom domain, set `base_path` to `""` and
 | `/archive/` | Every post, grouped by month, with a posting heatmap, topic filter, search, and sort by date / reads / title |
 | `/topics/` | All topics with post counts |
 | `/topics/<topic>/` | Posts in one topic |
-| `/posts/<slug>/` | A single post, with its interactive quiz |
+| `/posts/<slug>/` | A single post, with glossary tooltips and its interactive quiz |
+| `/glossary/` | Every defined term and which posts use it |
 | `/feed.xml` | RSS, 30 most recent |
 | `/data/posts.json` | Machine-readable index. The daily agent reads this to avoid repeating topics |
 
 The archive renders fully without JavaScript; filtering and sorting are
 progressive enhancement on top of the server-rendered list. The quiz does need
 JavaScript, since grading happens in the browser.
+
+## Glossary tooltips
+
+`glossary.yml` maps jargon to one-sentence definitions. The build wraps the
+**first** occurrence of each term in each post, so a reader gets the definition
+once rather than a page speckled with dotted underlines. Hover, tap, or focus
+the word with a keyboard to see it; Escape closes it. Every term also gets a
+row on `/glossary/` showing which posts use it.
+
+```yaml
+hedonic:
+  definition: "Concerned with pleasure and feeling good, as opposed to purpose."
+  aliases: [hedonia, hedonic well-being]
+  source: https://example.com/optional-link
+```
+
+A bare `term: "definition"` works too. Matching is case-insensitive and
+respects word boundaries, and terms are tried longest-first so "openness to
+experience" wins over "openness". Headings, links, and code are skipped: a
+tooltip nested inside a link would break the link, and one inside a heading
+looks broken.
+
+Definitions are shared across posts deliberately. A term defined once stays
+defined the same way, instead of each post inventing its own wording.
 
 ## Themes
 

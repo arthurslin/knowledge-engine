@@ -51,6 +51,20 @@ REPO FACTS
   the second option. Getting this wrong publishes a quiz that marks correct
   answers wrong, so check each one.
 
+STEP 0b: GLOSSARY
+Read glossary.yml. It maps jargon to one-sentence definitions, and the build
+turns the first occurrence of each term in a post into a hover definition.
+When your post uses a technical term that is not already in there, add it:
+
+      term:
+        definition: "One plain sentence. No jargon inside the definition."
+        aliases: [plural or alternative spelling]
+
+Reuse an existing entry rather than adding a near-duplicate, and do not reword
+an existing definition unless it is wrong, since it is shared across every post
+that uses the term. Three to six new terms a post is normal; thirty is not.
+Commit glossary.yml together with the post.
+
 STEP 1: PICK A TOPIC
 Fetch data/posts.json and read the last 30 titles and their topics. Pick one
 idea a curious non-specialist is unlikely to have met, from a domain that has
@@ -116,7 +130,7 @@ Then commit to main with the message "post: <title>" and push. GitHub Actions
 deploys within a few minutes.
   - One post per run. If a file dated today already exists, stop. Never
     overwrite it.
-  - Never force-push. Never touch anything outside posts/.
+  - Never force-push. Never touch anything outside posts/ and glossary.yml.
   - If the commit or push fails, stop and report. Do not retry with --force,
     do not open a PR, do not route around it.
 

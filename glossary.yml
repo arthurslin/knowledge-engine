@@ -1,0 +1,59 @@
+# Glossary of terms that get a hover definition in post bodies.
+#
+# The build wraps the FIRST occurrence of each term in each post. Later uses in
+# the same post are left alone, so a reader gets the definition once rather
+# than a page speckled with dotted underlines.
+#
+# Two forms work:
+#
+#   simple-term: "A one sentence definition."
+#
+#   richer-term:
+#     definition: "A one sentence definition."
+#     aliases: [other spelling, plural form]
+#     source: https://example.com/where-this-definition-comes-from
+#
+# Keep definitions to one sentence and plain. A definition that needs its own
+# jargon has not defined anything. Matching is case-insensitive and respects
+# word boundaries, so "mean" will not match inside "meaning".
+
+hedonic:
+  definition: "Concerned with pleasure and feeling good, as opposed to purpose or meaning."
+  aliases: [hedonia, hedonic well-being]
+
+eudaimonic:
+  definition: "Concerned with purpose, meaning and living well, as opposed to feeling good moment to moment."
+  aliases: [eudaimonia, eudaimonic well-being]
+
+cross-sectional:
+  definition: "A study that measures everyone at a single point in time, which can show that two things go together but not that one causes the other."
+
+positive affect:
+  definition: "Psychologists' term for the experience of pleasant feelings such as enthusiasm, alertness and contentment."
+
+Big Five:
+  definition: "The five broad personality traits most widely used in psychology: openness, conscientiousness, extraversion, agreeableness and emotional stability."
+  aliases: [Big Five personality traits]
+
+openness to experience:
+  definition: "The Big Five trait covering curiosity, imagination and appetite for new ideas and experiences."
+
+construct:
+  definition: "In psychology, a thing researchers propose and then try to measure, such as intelligence or well-being, rather than something observed directly."
+
+effect size:
+  definition: "How large an effect is, as opposed to whether it exists at all. A result can be statistically reliable and still be too small to matter."
+
+experience sampling:
+  definition: "A method that pings people at intervals during ordinary life to record what they are doing and feeling, rather than asking them to remember later."
+
+replication:
+  definition: "Running a study again, independently, to see whether the original result holds up."
+  aliases: [replicated, replicate]
+
+self-report:
+  definition: "Data collected by asking people about themselves, which is cheap and informative but vulnerable to memory and to what people want to appear true."
+
+correlational:
+  definition: "Showing that two things vary together, without establishing that either one causes the other."
+  aliases: [correlates, correlate, correlation]

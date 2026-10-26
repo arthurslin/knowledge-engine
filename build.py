@@ -27,6 +27,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from html.parser import HTMLParser
+
 import markdown
 import yaml
 
@@ -34,6 +36,7 @@ ROOT = Path(__file__).resolve().parent
 POSTS_DIR = ROOT / "posts"
 OUT_DIR = ROOT / "site"
 THEME = ROOT / "theme.css"
+GLOSSARY_FILE = ROOT / "glossary.yml"
 
 MD_EXTENSIONS = ["extra", "sane_lists", "smarty", "toc"]
 # Smart quotes yes, smart dashes no: house style forbids em dashes, and smarty
@@ -258,6 +261,149 @@ def lookup_views(counts, url_path):
 
 
 # --------------------------------------------------------------------------
+# glossary
+# --------------------------------------------------------------------------
+
+def load_glossary():
+    """
+    Read glossary.yml into [(key, compiled regex, definition, source)].
+    Longer terms first, so "openness to experience" wins over "openness".
+    """
+    if not GLOSSARY_FILE.is_file():
+        return []
+
+    raw = yaml.safe_load(GLOSSARY_FILE.read_text(encoding="utf-8")) or {}
+    if not isinstance(raw, dict):
+        raise ValueError("glossary.yml must be a mapping of term to definition")
+
+    entries = []
+    for term, value in raw.items():
+        if isinstance(value, str):
+            definition, aliases, source = value, [], ""
+        elif isinstance(value, dict):
+            definition = str(value.get("definition", "")).strip()
+            aliases = value.get("aliases") or []
+            source = str(value.get("source", "")).strip()
+        else:
+            raise ValueError(f"glossary.yml: '{term}' must be a string or a mapping")
+
+        if not definition:
+            raise ValueError(f"glossary.yml: '{term}' has no definition")
+
+        variants = sorted({str(term)} | {str(a) for a in aliases}, key=len, reverse=True)
+        pattern = r"\b(?:" + "|".join(re.escape(v) for v in variants) + r")\b"
+        entries.append({
+            "key": str(term),
+            "re": re.compile(pattern, re.IGNORECASE),
+            "definition": definition,
+            "source": source,
+        })
+
+    entries.sort(key=lambda entry: len(entry["key"]), reverse=True)
+    return entries
+
+
+class GlossaryLinker(HTMLParser):
+    """
+    Wraps the first occurrence of each glossary term in a post's body.
+
+    Only text nodes are touched, and never inside a link, heading, code block
+    or an existing tooltip: a definition bubble inside a heading looks broken,
+    and nesting one inside a link breaks the link.
+    """
+
+    SKIP_TAGS = {"a", "code", "pre", "kbd", "samp",
+                 "h1", "h2", "h3", "h4", "h5", "h6", "script", "style"}
+    VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input",
+                 "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self, entries, slug):
+        super().__init__(convert_charrefs=False)
+        self.entries = entries
+        self.slug = slug
+        self.out = []
+        self.skip_depth = 0
+        self.used = {}
+
+    # Re-emit markup exactly as it came in.
+    def handle_starttag(self, tag, attrs):
+        if tag in self.SKIP_TAGS:
+            self.skip_depth += 1
+        self.out.append(self.get_starttag_text())
+
+    def handle_startendtag(self, tag, attrs):
+        self.out.append(self.get_starttag_text())
+
+    def handle_endtag(self, tag):
+        if tag in self.SKIP_TAGS and self.skip_depth:
+            self.skip_depth -= 1
+        if tag not in self.VOID_TAGS:
+            self.out.append(f"</{tag}>")
+
+    def handle_entityref(self, name):
+        self.out.append(f"&{name};")
+
+    def handle_charref(self, name):
+        self.out.append(f"&#{name};")
+
+    def handle_comment(self, data):
+        self.out.append(f"<!--{data}-->")
+
+    def handle_decl(self, decl):
+        self.out.append(f"<!{decl}>")
+
+    def handle_data(self, data):
+        if self.skip_depth:
+            self.out.append(data)
+        else:
+            self.out.append(self.annotate(data))
+
+    def annotate(self, text):
+        """Wrap the earliest unused term in this text node, then keep going."""
+        result = []
+        while text:
+            best = None
+            for entry in self.entries:
+                if entry["key"] in self.used:
+                    continue
+                match = entry["re"].search(text)
+                if match and (best is None or match.start() < best[0].start()):
+                    best = (match, entry)
+            if best is None:
+                result.append(text)
+                break
+
+            match, entry = best
+            tip_id = f"gl-{slugify(entry['key'])}"
+            self.used[entry["key"]] = True
+
+            source = ""
+            if entry["source"]:
+                source = (f'<a class="tip-src" href="{e(entry["source"])}" '
+                          f'target="_blank" rel="noopener">source</a>')
+
+            result.append(text[:match.start()])
+            result.append(
+                f'<span class="term" tabindex="0" role="button" '
+                f'aria-describedby="{tip_id}">{match.group(0)}'
+                f'<span class="tip" id="{tip_id}" role="tooltip">'
+                f'<b>{e(entry["key"])}</b> {e(entry["definition"])}{source}'
+                f'</span></span>'
+            )
+            text = text[match.end():]
+        return "".join(result)
+
+
+def link_glossary(html_body, entries, slug):
+    if not entries:
+        return html_body, []
+    linker = GlossaryLinker(entries, slug)
+    linker.feed(html_body)
+    linker.close()
+    return "".join(linker.out), list(linker.used)
+
+
+# --------------------------------------------------------------------------
 # html helpers
 # --------------------------------------------------------------------------
 
@@ -296,6 +442,56 @@ THEME_SCRIPT = """<script>
   apply(current());
   btn.addEventListener("click", function () {
     store(ORDER[(ORDER.indexOf(current()) + 1) % ORDER.length]);
+  });
+})();
+</script>"""
+
+
+GLOSSARY_SCRIPT = """<script>
+(function () {
+  var terms = Array.prototype.slice.call(document.querySelectorAll(".term"));
+  if (!terms.length) return;
+
+  function closeAll(except) {
+    terms.forEach(function (t) { if (t !== except) t.classList.remove("open"); });
+  }
+
+  // Nudge the bubble back inside the viewport when a term sits near an edge.
+  function place(t) {
+    var tip = t.querySelector(".tip");
+    if (!tip) return;
+    tip.style.left = "0px";
+    var box = tip.getBoundingClientRect(), pad = 12;
+    if (box.right > window.innerWidth - pad) {
+      tip.style.left = Math.round(window.innerWidth - pad - box.right) + "px";
+    } else if (box.left < pad) {
+      tip.style.left = Math.round(pad - box.left) + "px";
+    }
+  }
+
+  terms.forEach(function (t) {
+    t.addEventListener("mouseenter", function () { place(t); });
+    t.addEventListener("focus", function () { place(t); });
+    t.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      var wasOpen = t.classList.contains("open");
+      closeAll();
+      if (!wasOpen) { t.classList.add("open"); place(t); }
+    });
+    t.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        t.classList.toggle("open");
+        place(t);
+      } else if (ev.key === "Escape") {
+        t.classList.remove("open");
+      }
+    });
+  });
+
+  document.addEventListener("click", function () { closeAll(); });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") closeAll();
   });
 })();
 </script>"""
@@ -351,6 +547,7 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
       {nav_link('home', '/', 'Latest')}
       {nav_link('archive', '/archive/', 'Archive')}
       {nav_link('topics', '/topics/', 'Topics')}
+      {nav_link('glossary', '/glossary/', 'Glossary') if cfg.get('has_glossary') else ''}
       <a href="{bp}/feed.xml">RSS</a>
       <button id="theme-toggle" class="theme-toggle" type="button"
               aria-label="Switch colour theme" title="Switch colour theme"></button>
@@ -365,6 +562,7 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
   <span>Written daily by an automated agent. Sources are verified at publish time; mistakes are mine.</span>
 </footer>
 {THEME_SCRIPT}
+{GLOSSARY_SCRIPT}
 {tracker}
 </body>
 </html>
@@ -793,6 +991,46 @@ def render_topics(cfg, posts, views):
                    canonical=f"{cfg['base_url']}/topics/{slugify(topic)}/"))
 
 
+def render_glossary(cfg, entries, posts):
+    bp = cfg["base_path"]
+    usage = {}
+    for post in posts:
+        for key in post.get("glossary", []):
+            usage.setdefault(key, []).append(post)
+
+    rows = []
+    for entry in sorted(entries, key=lambda x: x["key"].lower()):
+        where = usage.get(entry["key"], [])
+        if where:
+            links = ", ".join(
+                f'<a href="{bp}{p["url_path"]}">{e(p["title"])}</a>' for p in where[:4]
+            )
+            extra = f" and {len(where) - 4} more" if len(where) > 4 else ""
+            seen = f'<p class="gl-where">Used in {links}{extra}</p>'
+        else:
+            seen = '<p class="gl-where gl-unused">Not used in any post yet</p>'
+
+        source = ""
+        if entry["source"]:
+            source = (f' <a class="gl-src" href="{e(entry["source"])}" '
+                      f'target="_blank" rel="noopener">source</a>')
+
+        rows.append(f"""<div class="gl-entry" id="t-{slugify(entry['key'])}">
+  <h2 class="gl-term">{e(entry['key'])}</h2>
+  <p class="gl-def">{e(entry['definition'])}{source}</p>
+  {seen}
+</div>""")
+
+    body = f"""<h1 class="page-title">Glossary</h1>
+<p class="page-sub">{len(entries)} term{'' if len(entries) == 1 else 's'}. The first time one of
+these appears in a post, you can hover or tap it for the definition without leaving the page.</p>
+{''.join(rows) if rows else '<p class="empty">No terms yet.</p>'}"""
+
+    write(OUT_DIR / "glossary" / "index.html",
+          page(cfg, title="Glossary", body=body, nav_key="glossary",
+               canonical=f"{cfg['base_url']}/glossary/"))
+
+
 def render_feed(cfg, posts):
     base = cfg["base_url"]
     items = []
@@ -848,7 +1086,7 @@ def render_data(cfg, posts, views):
 # main
 # --------------------------------------------------------------------------
 
-def run_checks(posts, problems):
+def run_checks(posts, problems, glossary):
     """
     Validate posts without building. Used by the daily agent before it commits:
         python3 build.py --check
@@ -869,7 +1107,8 @@ def run_checks(posts, problems):
         return 1
 
     print(f"OK  {len(posts)} post(s) parse cleanly, no em dashes, "
-          f"{sum(len(p['quiz']) for p in posts)} quiz question(s) valid")
+          f"{sum(len(p['quiz']) for p in posts)} quiz question(s) valid, "
+          f"{len(glossary)} glossary term(s) loaded")
     return 0
 
 
@@ -877,8 +1116,15 @@ def main():
     cfg = load_config()
     posts, problems = load_posts()
 
+    try:
+        glossary = load_glossary()
+    except (ValueError, yaml.YAMLError) as exc:
+        print(f"ERROR  {exc}", file=sys.stderr)
+        return 1
+    cfg["has_glossary"] = bool(glossary)
+
     if "--check" in sys.argv:
-        return run_checks(posts, problems)
+        return run_checks(posts, problems, glossary)
 
     for problem in problems:
         print(f"  ! skipped: {problem}", file=sys.stderr)
@@ -896,11 +1142,17 @@ def main():
         shutil.rmtree(OUT_DIR)
     OUT_DIR.mkdir(parents=True)
 
+    for post in posts:
+        post["html"], post["glossary"] = link_glossary(
+            post["html"], glossary, post["slug"])
+
     render_index(cfg, posts, views)
     for post in posts:
         render_post(cfg, post, views)
     render_archive(cfg, posts, views)
     render_topics(cfg, posts, views)
+    if glossary:
+        render_glossary(cfg, glossary, posts)
     render_feed(cfg, posts)
     render_data(cfg, posts, views)
     (OUT_DIR / ".nojekyll").write_text("", encoding="utf-8")
