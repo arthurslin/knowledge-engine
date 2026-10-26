@@ -3,7 +3,7 @@
 Static site generator for Knowledge Engine.
 
 Reads Markdown posts with YAML frontmatter from posts/ and writes a complete
-static site to site/. No framework, no npm — just `markdown` and `PyYAML`.
+static site to site/. No framework, no npm, just `markdown` and `PyYAML`.
 
 Usage:
     python3 build.py                 # build with config.json
@@ -12,7 +12,7 @@ Usage:
 Read counts come from the GoatCounter API when both env vars are set:
     GOATCOUNTER_CODE        your site code, e.g. "knowledge-engine"
     GOATCOUNTER_API_TOKEN   an API token with "read statistics" permission
-Without them the build still succeeds; counts render as "—".
+Without them the build still succeeds; counts render as "no read data".
 """
 
 import datetime as dt
@@ -36,7 +36,11 @@ OUT_DIR = ROOT / "site"
 THEME = ROOT / "theme.css"
 
 MD_EXTENSIONS = ["extra", "sane_lists", "smarty", "toc"]
+# Smart quotes yes, smart dashes no: house style forbids em dashes, and smarty
+# would silently turn "---" in a body into one.
+MD_EXTENSION_CONFIGS = {"smarty": {"smart_dashes": False}}
 FILENAME_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-(.+)\.md$")
+EM_DASH = "\u2014"
 
 
 # --------------------------------------------------------------------------
@@ -76,7 +80,7 @@ def parse_post(path):
     try:
         front = yaml.safe_load(parts[1]) or {}
     except yaml.YAMLError as exc:
-        raise ValueError(f"{path.name}: frontmatter is not valid YAML — {exc}")
+        raise ValueError(f"{path.name}: frontmatter is not valid YAML, {exc}")
     if not isinstance(front, dict):
         raise ValueError(f"{path.name}: frontmatter must be a mapping")
 
@@ -107,7 +111,11 @@ def parse_post(path):
         topics = [t.strip() for t in topics.split(",")]
     topics = [str(t).strip() for t in topics if str(t).strip()]
 
-    md = markdown.Markdown(extensions=MD_EXTENSIONS)
+    quiz = parse_quiz(path.name, front.get("quiz") or [])
+    reflect = [str(r).strip() for r in (front.get("reflect") or []) if str(r).strip()]
+
+    md = markdown.Markdown(extensions=MD_EXTENSIONS,
+                           extension_configs=MD_EXTENSION_CONFIGS)
     return {
         "title": str(title),
         "date": date,
@@ -115,9 +123,58 @@ def parse_post(path):
         "topics": topics,
         "summary": str(front.get("summary", "")).strip(),
         "status": str(front.get("status", "published")).strip().lower(),
+        "quiz": quiz,
+        "reflect": reflect,
         "html": md.convert(body),
         "source_file": path.name,
+        "raw": raw,
     }
+
+
+def parse_quiz(filename, raw_quiz):
+    """Validate the frontmatter quiz block. Raises ValueError on a bad one."""
+    if not isinstance(raw_quiz, list):
+        raise ValueError(f"{filename}: quiz must be a list of questions")
+
+    questions = []
+    for i, item in enumerate(raw_quiz, start=1):
+        if not isinstance(item, dict):
+            raise ValueError(f"{filename}: quiz question {i} must be a mapping")
+        prompt = str(item.get("q", "")).strip()
+        options = item.get("options") or []
+        if not prompt:
+            raise ValueError(f"{filename}: quiz question {i} has no 'q'")
+        if not isinstance(options, list) or len(options) < 2:
+            raise ValueError(f"{filename}: quiz question {i} needs at least 2 options")
+        try:
+            answer = int(item.get("answer"))
+        except (TypeError, ValueError):
+            raise ValueError(f"{filename}: quiz question {i} needs an integer 'answer'")
+        if not 0 <= answer < len(options):
+            raise ValueError(
+                f"{filename}: quiz question {i} 'answer' is {answer}, "
+                f"but there are {len(options)} options (indexes are 0-based)"
+            )
+        questions.append({
+            "q": prompt,
+            "options": [str(o) for o in options],
+            "answer": answer,
+            "explain": str(item.get("explain", "")).strip(),
+        })
+    return questions
+
+
+def find_em_dashes(post):
+    """House style bans em dashes. Returns a list of 'file:line  context' hits."""
+    hits = []
+    for lineno, line in enumerate(post["raw"].splitlines(), start=1):
+        if EM_DASH in line:
+            snippet = line.strip()
+            if len(snippet) > 90:
+                col = snippet.index(EM_DASH)
+                snippet = "..." + snippet[max(0, col - 40):col + 45] + "..."
+            hits.append(f"{post['source_file']}:{lineno}  {snippet}")
+    return hits
 
 
 def load_posts():
@@ -145,7 +202,7 @@ def load_posts():
 def fetch_views(cfg, since):
     """
     Return {url_path: visitor_count}. Empty dict when unconfigured or on any
-    failure — analytics must never break a build.
+    failure, analytics must never break a build.
     """
     code = cfg.get("goatcounter_code") or os.environ.get("GOATCOUNTER_CODE", "")
     token = os.environ.get("GOATCOUNTER_API_TOKEN", "")
@@ -183,7 +240,7 @@ def fetch_views(cfg, since):
             if not payload.get("more"):
                 break
     except (urllib.error.URLError, urllib.error.HTTPError, ValueError, OSError, TimeoutError) as exc:
-        print(f"  ! read counts unavailable ({type(exc).__name__}: {exc}) — rendering as unknown",
+        print(f"  ! read counts unavailable ({type(exc).__name__}: {exc}), rendering as unknown",
               file=sys.stderr)
         return {}
 
@@ -203,6 +260,46 @@ def lookup_views(counts, url_path):
 # --------------------------------------------------------------------------
 # html helpers
 # --------------------------------------------------------------------------
+
+THEME_SCRIPT = """<script>
+(function () {
+  var btn = document.getElementById("theme-toggle");
+  if (!btn) return;
+  var ICONS = {
+    auto: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>',
+    light: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    dark: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+  };
+  var LABELS = { auto: "Theme: follow system", light: "Theme: light", dark: "Theme: dark" };
+  var ORDER = ["auto", "light", "dark"];
+
+  function current() {
+    try {
+      var t = localStorage.getItem("ke-theme");
+      return (t === "light" || t === "dark") ? t : "auto";
+    } catch (e) { return "auto"; }
+  }
+  function apply(mode) {
+    if (mode === "auto") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", mode);
+    btn.innerHTML = ICONS[mode];
+    btn.title = LABELS[mode];
+    btn.setAttribute("aria-label", LABELS[mode] + ". Click to change.");
+  }
+  function store(mode) {
+    try {
+      if (mode === "auto") localStorage.removeItem("ke-theme");
+      else localStorage.setItem("ke-theme", mode);
+    } catch (e) { /* private mode: the choice just won't persist */ }
+    apply(mode);
+  }
+  apply(current());
+  btn.addEventListener("click", function () {
+    store(ORDER[(ORDER.indexOf(current()) + 1) % ORDER.length]);
+  });
+})();
+</script>"""
+
 
 def e(text):
     return html.escape(str(text), quote=True)
@@ -224,6 +321,13 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
         current = ' aria-current="page"' if key == nav_key else ""
         return f'<a href="{bp}{href}"{current}>{label}</a>'
 
+    # Applied before first paint so a remembered theme never flashes.
+    theme_boot = (
+        '<script>(function(){try{var t=localStorage.getItem("ke-theme");'
+        'if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}'
+        'catch(e){}})();</script>'
+    )
+
     wrap = "wrap-wide" if wide else "wrap"
     year = dt.date.today().year
 
@@ -237,6 +341,7 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
 {f'<link rel="canonical" href="{e(canonical)}">' if canonical else ''}
 <link rel="alternate" type="application/rss+xml" title="{e(cfg['title'])}" href="{bp}/feed.xml">
 <style>{css}</style>
+{theme_boot}
 </head>
 <body>
 <header class="site-head">
@@ -247,6 +352,8 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
       {nav_link('archive', '/archive/', 'Archive')}
       {nav_link('topics', '/topics/', 'Topics')}
       <a href="{bp}/feed.xml">RSS</a>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Switch colour theme" title="Switch colour theme"></button>
     </nav>
   </div>
 </header>
@@ -257,6 +364,7 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
   <span>© {year} {e(cfg.get('author', ''))}</span>
   <span>Written daily by an automated agent. Sources are verified at publish time; mistakes are mine.</span>
 </footer>
+{THEME_SCRIPT}
 {tracker}
 </body>
 </html>
@@ -284,7 +392,7 @@ def fmt_date_short(date):
 
 def fmt_views(count):
     if count is None:
-        return '<span class="views" data-unknown="1" title="No read data yet">—</span>'
+        return '<span class="views" data-unknown="1">no read data</span>'
     label = "read" if count == 1 else "reads"
     return f'<span class="views">{count:,} {label}</span>'
 
@@ -324,6 +432,108 @@ def render_index(cfg, posts, views):
                canonical=f"{cfg['base_url']}/"))
 
 
+QUIZ_SCRIPT = """<script>
+(function () {
+  var root = document.getElementById("quiz");
+  if (!root) return;
+  var questions = Array.prototype.slice.call(root.querySelectorAll(".q"));
+  var scoreBox = root.querySelector(".quiz-score");
+  var resetBtn = root.querySelector(".quiz-reset");
+  var answered = 0, correct = 0;
+
+  function finish() {
+    scoreBox.textContent = correct + " of " + questions.length + " correct.";
+    scoreBox.hidden = false;
+    resetBtn.hidden = false;
+  }
+
+  function reset() {
+    answered = 0; correct = 0;
+    scoreBox.hidden = true; resetBtn.hidden = true;
+    questions.forEach(function (q) {
+      q.classList.remove("done");
+      q.querySelector(".explain").hidden = true;
+      Array.prototype.forEach.call(q.querySelectorAll(".opt"), function (b) {
+        b.classList.remove("chosen", "correct", "wrong");
+        b.disabled = false;
+        b.removeAttribute("aria-describedby");
+      });
+    });
+    questions[0].scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  questions.forEach(function (q) {
+    var right = parseInt(q.dataset.answer, 10);
+    var opts = Array.prototype.slice.call(q.querySelectorAll(".opt"));
+    var explain = q.querySelector(".explain");
+    var verdict = q.querySelector(".verdict");
+
+    opts.forEach(function (btn, i) {
+      btn.addEventListener("click", function () {
+        if (q.classList.contains("done")) return;
+        q.classList.add("done");
+        var hit = i === right;
+        if (hit) correct++;
+        answered++;
+
+        btn.classList.add("chosen", hit ? "correct" : "wrong");
+        if (!hit) opts[right].classList.add("correct");
+        opts.forEach(function (b) { b.disabled = true; });
+
+        verdict.textContent = hit ? "Correct." : "Not that one.";
+        verdict.className = "verdict " + (hit ? "ok" : "no");
+        explain.hidden = false;
+
+        if (answered === questions.length) finish();
+      });
+    });
+  });
+
+  resetBtn.addEventListener("click", reset);
+})();
+</script>"""
+
+
+def render_quiz(post):
+    """Interactive self-test rendered from the post's frontmatter."""
+    if not post["quiz"] and not post["reflect"]:
+        return ""
+
+    items = []
+    for question in post["quiz"]:
+        opts = "".join(
+            f'<button class="opt" type="button">{e(option)}</button>'
+            for option in question["options"]
+        )
+        explain = e(question["explain"]) if question["explain"] else ""
+        items.append(f"""<li class="q" data-answer="{question['answer']}">
+  <p class="q-text">{e(question['q'])}</p>
+  <div class="opts">{opts}</div>
+  <p class="explain" hidden><strong class="verdict"></strong> {explain}</p>
+</li>""")
+
+    quiz_block = ""
+    if items:
+        quiz_block = f"""<ol class="quiz-list">{''.join(items)}</ol>
+<p class="quiz-score" hidden></p>
+<button class="quiz-reset" type="button" hidden>Start over</button>"""
+
+    reflect_block = ""
+    if post["reflect"]:
+        lis = "".join(f"<li>{e(r)}</li>" for r in post["reflect"])
+        reflect_block = f"""<h3 class="quiz-subhead">Questions without answers</h3>
+<ol class="reflect">{lis}</ol>"""
+
+    note = "Answers are checked in your browser. Nothing is recorded or sent anywhere."
+    return f"""<section class="quiz" id="quiz">
+  <h2 class="quiz-head">Check yourself</h2>
+  <p class="quiz-note">{note}</p>
+  {quiz_block}
+  {reflect_block}
+</section>
+{QUIZ_SCRIPT if items else ''}"""
+
+
 def render_post(cfg, post, views):
     count = lookup_views(views, post["url_path"])
     body = f"""<article>
@@ -339,7 +549,8 @@ def render_post(cfg, post, views):
 {post['html']}
   </div>
 </article>
-<p style="margin-top:40px"><a href="{cfg['base_path']}/archive/">← Archive</a></p>"""
+{render_quiz(post)}
+<p style="margin-top:40px"><a href="{cfg['base_path']}/archive/">Back to the archive</a></p>"""
 
     write(OUT_DIR / "posts" / post["slug"] / "index.html",
           page(cfg, title=post["title"], body=body, description=post["summary"],
@@ -366,7 +577,7 @@ def build_heatmap(posts, weeks=53):
             n = per_day.get(day, 0)
             level = "" if n == 0 else (" l1" if n == 1 else (" l2" if n == 2 else " l3"))
             label = "no post" if n == 0 else (f"{n} post" if n == 1 else f"{n} posts")
-            cells.append(f'<div class="cell{level}" title="{day.isoformat()} — {label}"></div>')
+            cells.append(f'<div class="cell{level}" title="{day.isoformat()}, {label}"></div>')
         day += dt.timedelta(days=1)
 
     posted_days = sum(1 for d in per_day if start <= d <= today)
@@ -448,7 +659,7 @@ def render_archive(cfg, posts, views):
 
   function viewsHtml(v) {
     if (v === null || v === undefined) {
-      return '<span class="views" data-unknown="1" title="No read data yet">\\u2014</span>';
+      return '<span class="views" data-unknown="1">no read data</span>';
     }
     return '<span class="views">' + v.toLocaleString() + (v === 1 ? " read" : " reads") + "</span>";
   }
@@ -613,7 +824,7 @@ def render_feed(cfg, posts):
 
 
 def render_data(cfg, posts, views):
-    """Machine-readable index — useful for the daily agent's topic rotation."""
+    """Machine-readable index, useful for the daily agent's topic rotation."""
     payload = {
         "generated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "count": len(posts),
@@ -637,12 +848,46 @@ def render_data(cfg, posts, views):
 # main
 # --------------------------------------------------------------------------
 
+def run_checks(posts, problems):
+    """
+    Validate posts without building. Used by the daily agent before it commits:
+        python3 build.py --check
+    Returns a process exit code.
+    """
+    style = []
+    for post in posts:
+        style.extend(find_em_dashes(post))
+
+    for problem in problems:
+        print(f"ERROR  {problem}", file=sys.stderr)
+    for hit in style:
+        print(f"ERROR  em dash (house style forbids it) {hit}", file=sys.stderr)
+
+    if problems or style:
+        print(f"\n{len(problems)} parse error(s), {len(style)} em dash(es). "
+              f"Fix these before committing.", file=sys.stderr)
+        return 1
+
+    print(f"OK  {len(posts)} post(s) parse cleanly, no em dashes, "
+          f"{sum(len(p['quiz']) for p in posts)} quiz question(s) valid")
+    return 0
+
+
 def main():
     cfg = load_config()
     posts, problems = load_posts()
 
+    if "--check" in sys.argv:
+        return run_checks(posts, problems)
+
     for problem in problems:
-        print(f"  ! skipped — {problem}", file=sys.stderr)
+        print(f"  ! skipped: {problem}", file=sys.stderr)
+
+    # Style issues warn but never block a deploy: one stray dash should not
+    # take the whole site offline. --check is where they are fatal.
+    style = [hit for post in posts for hit in find_em_dashes(post)]
+    for hit in style:
+        print(f"  ! em dash in {hit}", file=sys.stderr)
 
     since = min((p["date"] for p in posts), default=dt.date.today()) - dt.timedelta(days=1)
     views = fetch_views(cfg, since)
@@ -665,9 +910,11 @@ def main():
     print(f"Built {len(posts)} post(s), {len(topics)} topic(s) into {OUT_DIR}")
     print(f"Read counts: {counted}/{len(posts)} posts have data"
           if views else "Read counts: not configured")
+    if style:
+        print(f"Style: {len(style)} em dash(es) found, see warnings above")
 
     if problems:
-        print(f"\n{len(problems)} file(s) were skipped — see warnings above.", file=sys.stderr)
+        print(f"\n{len(problems)} file(s) were skipped, see warnings above.", file=sys.stderr)
         return 1
     return 0
 
