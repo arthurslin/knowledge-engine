@@ -202,14 +202,27 @@ def load_posts():
 # read counts (GoatCounter)
 # --------------------------------------------------------------------------
 
+def ci_annotate(level, message):
+    """
+    Surface a message on the GitHub Actions run summary, where it is visible
+    without opening the logs. A no-op outside Actions.
+    """
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        print(f"::{level} title=Read counts::{message}")
+
+
 def fetch_views(cfg, since):
     """
     Return {url_path: visitor_count}. Empty dict when unconfigured or on any
     failure, analytics must never break a build.
     """
     code = cfg.get("goatcounter_code") or os.environ.get("GOATCOUNTER_CODE", "")
-    token = os.environ.get("GOATCOUNTER_API_TOKEN", "")
-    if not code or not token:
+    token = os.environ.get("GOATCOUNTER_API_TOKEN", "").strip()
+    if not code:
+        ci_annotate("notice", "goatcounter_code is empty in config.json; counts skipped")
+        return {}
+    if not token:
+        ci_annotate("warning", "GOATCOUNTER_API_TOKEN secret is missing or empty; counts skipped")
         return {}
 
     base = f"https://{code}.goatcounter.com/api/v0/stats/hits"
@@ -249,11 +262,26 @@ def fetch_views(cfg, since):
             pages += 1
             if not payload.get("more"):
                 break
-    except (urllib.error.URLError, urllib.error.HTTPError, ValueError, OSError, TimeoutError) as exc:
-        print(f"  ! read counts unavailable ({type(exc).__name__}: {exc}), rendering as unknown",
-              file=sys.stderr)
+    except urllib.error.HTTPError as exc:
+        # HTTPError is a subclass of URLError, so it must be caught first. Its
+        # body usually says exactly what is wrong (bad token, missing
+        # permission, unverified email), which is worth surfacing.
+        try:
+            detail = exc.read().decode("utf-8", "replace")[:300]
+        except Exception:
+            detail = ""
+        msg = f"GoatCounter API returned HTTP {exc.code}. {detail}".strip()
+        print(f"  ! read counts unavailable: {msg}", file=sys.stderr)
+        ci_annotate("warning", msg)
+        return {}
+    except (urllib.error.URLError, ValueError, OSError, TimeoutError) as exc:
+        msg = f"read counts unavailable ({type(exc).__name__}: {exc})"
+        print(f"  ! {msg}", file=sys.stderr)
+        ci_annotate("warning", msg)
         return {}
 
+    ci_annotate("notice", f"fetched counts for {len(counts)} path(s) since {since.isoformat()}: "
+                + ", ".join(f"{p}={n}" for p, n in sorted(counts.items())[:8]))
     return counts
 
 
