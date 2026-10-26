@@ -234,11 +234,18 @@ def fetch_views(cfg, since):
             hits = payload.get("hits") or []
             if not hits:
                 break
+            # GoatCounter records the browser's full path, which on a GitHub
+            # project page includes the /knowledge-engine prefix. Post URLs
+            # here are site-relative, so strip the prefix before storing.
+            prefix = cfg.get("base_path", "")
             for hit in hits:
                 path = hit.get("path")
-                if path:
-                    counts[path] = int(hit.get("count") or 0)
-                    exclude.append(path)
+                if not path:
+                    continue
+                exclude.append(path)
+                if prefix and path.startswith(prefix):
+                    path = path[len(prefix):] or "/"
+                counts[path] = counts.get(path, 0) + int(hit.get("count") or 0)
             pages += 1
             if not payload.get("more"):
                 break
