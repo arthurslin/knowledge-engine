@@ -75,3 +75,21 @@ neoplasia:
 comparative study:
   definition: "Research that looks for patterns across many species at once rather than experimenting on one."
   aliases: [comparative studies]
+
+risk compensation:
+  definition: "The idea that people respond to a safety improvement by taking more risk, using up some of the protection it gives."
+  aliases: [Peltzman effect, compensating behaviour, compensating behavior]
+
+panel data:
+  definition: "Measurements of the same set of units, such as states or people, repeated over several years."
+
+instrumental variable:
+  definition: "Something that shifts the thing being studied but has no other route to the outcome, used to tell cause apart from mere association."
+  aliases: [instrumental variables, instrumented]
+
+statistical power:
+  definition: "The chance that a study will detect an effect of a given size if that effect is really there."
+
+time series:
+  definition: "A sequence of measurements of the same quantity taken at regular intervals over time."
+  aliases: [time-series]
