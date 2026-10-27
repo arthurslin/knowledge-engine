@@ -21,7 +21,9 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -180,10 +182,39 @@ def find_em_dashes(post):
     return hits
 
 
+def git_added_times():
+    """
+    Map each post file name to the Unix time of the commit that first added it.
+
+    Several posts can share a date, so the date alone cannot say which is
+    newest. The commit that added the file can. Needs full history in CI
+    (actions/checkout with fetch-depth: 0); returns {} if git is unavailable.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "log", "--diff-filter=A", "--format=%x00%ct", "--name-only",
+             "--", str(POSTS_DIR)],
+            cwd=ROOT, capture_output=True, text=True, check=True, timeout=30,
+        ).stdout
+    except (OSError, subprocess.SubprocessError):
+        return {}
+    added = {}
+    for block in out.split("\x00")[1:]:
+        lines = [l for l in block.splitlines() if l.strip()]
+        if not lines:
+            continue
+        ts = int(lines[0])
+        for name in lines[1:]:
+            # git log runs newest first, so the last write is the earliest add.
+            added[Path(name).name] = ts
+    return added
+
+
 def load_posts():
     if not POSTS_DIR.is_dir():
         return [], []
     posts, problems = [], []
+    added = git_added_times()
     for path in sorted(POSTS_DIR.glob("*.md")):
         try:
             post = parse_post(path)
@@ -193,8 +224,12 @@ def load_posts():
         if post["status"] != "published":
             continue
         post["url_path"] = f"/posts/{post['slug']}/"
+        # Uncommitted files (a local draft) count as the newest.
+        post["published_ts"] = added.get(path.name, int(time.time()))
         posts.append(post)
-    posts.sort(key=lambda p: (p["date"], p["slug"]), reverse=True)
+    # Newest first: by date, then by when the post was committed that day.
+    posts.sort(key=lambda p: (p["date"], p["published_ts"], p["slug"]), reverse=True)
+    assign_topic_colors(posts)
     return posts, problems
 
 
@@ -604,11 +639,32 @@ def page(cfg, *, title, body, nav_key="", description="", wide=False, canonical=
 """
 
 
+TOPIC_COLOR_COUNT = 8   # matches the .tc-0 ... .tc-7 classes in theme.css
+TOPIC_COLORS = {}
+
+
+def assign_topic_colors(posts):
+    """
+    Give each topic a colour slot in the order topics first appeared, so a
+    topic keeps its colour as new posts and new topics are added.
+    """
+    TOPIC_COLORS.clear()
+    for post in sorted(posts, key=lambda p: (p["date"], p["published_ts"], p["slug"])):
+        for topic in post["topics"]:
+            slug = slugify(topic)
+            if slug not in TOPIC_COLORS:
+                TOPIC_COLORS[slug] = len(TOPIC_COLORS) % TOPIC_COLOR_COUNT
+
+
+def topic_class(topic):
+    return f"tc-{TOPIC_COLORS.get(slugify(topic), 0)}"
+
+
 def tag_links(cfg, topics):
     if not topics:
         return ""
     links = "".join(
-        f'<a class="tag" href="{cfg["base_path"]}/topics/{slugify(t)}/">{e(t)}</a>'
+        f'<a class="tag {topic_class(t)}" href="{cfg["base_path"]}/topics/{slugify(t)}/">{e(t)}</a>'
         for t in topics
     )
     return f'<div class="tags">{links}</div>'
@@ -840,13 +896,15 @@ def render_archive(cfg, posts, views):
             "month": post["date"].strftime("%B %Y"),
             "topics": post["topics"],
             "topicSlugs": [slugify(t) for t in post["topics"]],
+            "topicClasses": [topic_class(t) for t in post["topics"]],
+            "ts": post["published_ts"],
             "views": count,
             "summary": post["summary"],
         })
 
     all_topics = sorted({t for p in posts for t in p["topics"]}, key=str.lower)
     chips = "".join(
-        f'<button class="chip" type="button" aria-pressed="false" data-topic="{slugify(t)}">{e(t)}</button>'
+        f'<button class="chip {topic_class(t)}" type="button" aria-pressed="false" data-topic="{slugify(t)}">{e(t)}</button>'
         for t in all_topics
     )
 
@@ -858,8 +916,8 @@ def render_archive(cfg, posts, views):
             current_month = item["month"]
             static_rows.append(f'<h2 class="month-head">{e(current_month)}</h2>')
         tags = "".join(
-            f'<a class="tag" href="{bp}/topics/{s}/">{e(t)}</a>'
-            for t, s in zip(item["topics"], item["topicSlugs"])
+            f'<a class="tag {c}" href="{bp}/topics/{s}/">{e(t)}</a>'
+            for t, s, c in zip(item["topics"], item["topicSlugs"], item["topicClasses"])
         )
         static_rows.append(f"""<div class="row">
   <div class="d">{e(item['dateLabel'])}</div>
@@ -913,10 +971,11 @@ def render_archive(cfg, posts, views):
 
     var sort = sortSel.value;
     rows.sort(function (a, b) {
-      if (sort === "oldest") return a.date.localeCompare(b.date);
-      if (sort === "views") return (b.views || 0) - (a.views || 0) || b.date.localeCompare(a.date);
+      var newest = b.date.localeCompare(a.date) || (b.ts - a.ts);
+      if (sort === "oldest") return -newest;
+      if (sort === "views") return (b.views || 0) - (a.views || 0) || newest;
       if (sort === "title") return a.title.localeCompare(b.title);
-      return b.date.localeCompare(a.date);
+      return newest;
     });
 
     if (!rows.length) {
@@ -933,7 +992,7 @@ def render_archive(cfg, posts, views):
         html += '<h2 class="month-head">' + esc(month) + "</h2>";
       }
       var tags = p.topics.map(function (t, i) {
-        return '<a class="tag" href="' + TOPIC_BASE + p.topicSlugs[i] + '/">' + esc(t) + "</a>";
+        return '<a class="tag ' + p.topicClasses[i] + '" href="' + TOPIC_BASE + p.topicSlugs[i] + '/">' + esc(t) + "</a>";
       }).join("");
       html += '<div class="row"><div class="d">' + esc(p.dateLabel) + "</div>" +
         '<div class="t"><a href="' + esc(p.url) + '">' + esc(p.title) + "</a>" +
@@ -993,7 +1052,7 @@ def render_topics(cfg, posts, views):
 
     ordered = sorted(by_topic.items(), key=lambda kv: (-len(kv[1]), kv[0].lower()))
     cards = "".join(
-        f'<li><a class="topic-card" href="{bp}/topics/{slugify(t)}/">'
+        f'<li><a class="topic-card {topic_class(t)}" href="{bp}/topics/{slugify(t)}/">'
         f'<span>{e(t)}</span><span class="n">{len(ps)}</span></a></li>'
         for t, ps in ordered
     )

@@ -156,12 +156,41 @@ h3 { font-size: 1.1rem; margin: 1.8em 0 0.4em; }
   letter-spacing: 0.02em;
   padding: 2px 8px;
   border-radius: 99px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--tc-bg, var(--accent-soft));
+  color: var(--tc-fg, var(--accent));
   text-decoration: none;
   white-space: nowrap;
 }
-.tag:hover { background: var(--accent); color: var(--bg); }
+.tag:hover { background: var(--tc-fg, var(--accent)); color: var(--bg); }
+
+/* Topic colours. build.py gives each topic a slot, .tc-0 to .tc-7, in the
+   order topics first appeared, so a topic keeps its colour over time. */
+.tc-0 { --tc-fg: #9c3d1a; --tc-bg: #f3e5de; }
+.tc-1 { --tc-fg: #1a6e66; --tc-bg: #dcefec; }
+.tc-2 { --tc-fg: #4553a8; --tc-bg: #e2e5f5; }
+.tc-3 { --tc-fg: #5c6918; --tc-bg: #ebeed8; }
+.tc-4 { --tc-fg: #8a3f7e; --tc-bg: #f2e1ee; }
+.tc-5 { --tc-fg: #8a5f08; --tc-bg: #f5ead2; }
+.tc-6 { --tc-fg: #2f6a9a; --tc-bg: #dde9f3; }
+.tc-7 { --tc-fg: #a83a4a; --tc-bg: #f6dfe2; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tc-0 { --tc-fg: #e08456; --tc-bg: #33231b; }
+  :root:not([data-theme="light"]) .tc-1 { --tc-fg: #5cc2b6; --tc-bg: #173230; }
+  :root:not([data-theme="light"]) .tc-2 { --tc-fg: #8f9cf0; --tc-bg: #22253d; }
+  :root:not([data-theme="light"]) .tc-3 { --tc-fg: #b5c45a; --tc-bg: #2a2e17; }
+  :root:not([data-theme="light"]) .tc-4 { --tc-fg: #d08ac4; --tc-bg: #35202f; }
+  :root:not([data-theme="light"]) .tc-5 { --tc-fg: #e0b050; --tc-bg: #352a14; }
+  :root:not([data-theme="light"]) .tc-6 { --tc-fg: #6fb0e6; --tc-bg: #1a2a38; }
+  :root:not([data-theme="light"]) .tc-7 { --tc-fg: #e88a98; --tc-bg: #3a1e23; }
+}
+:root[data-theme="dark"] .tc-0 { --tc-fg: #e08456; --tc-bg: #33231b; }
+:root[data-theme="dark"] .tc-1 { --tc-fg: #5cc2b6; --tc-bg: #173230; }
+:root[data-theme="dark"] .tc-2 { --tc-fg: #8f9cf0; --tc-bg: #22253d; }
+:root[data-theme="dark"] .tc-3 { --tc-fg: #b5c45a; --tc-bg: #2a2e17; }
+:root[data-theme="dark"] .tc-4 { --tc-fg: #d08ac4; --tc-bg: #35202f; }
+:root[data-theme="dark"] .tc-5 { --tc-fg: #e0b050; --tc-bg: #352a14; }
+:root[data-theme="dark"] .tc-6 { --tc-fg: #6fb0e6; --tc-bg: #1a2a38; }
+:root[data-theme="dark"] .tc-7 { --tc-fg: #e88a98; --tc-bg: #3a1e23; }
 
 .views { font-variant-numeric: tabular-nums; }
 .views[data-unknown="1"] { color: var(--faint); }
@@ -382,8 +411,9 @@ h3 { font-size: 1.1rem; margin: 1.8em 0 0.4em; }
   color: var(--muted);
   cursor: pointer;
 }
-.chip:hover { border-color: var(--accent); color: var(--accent); }
-.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip[class*="tc-"] { color: var(--tc-fg); background: var(--tc-bg); border-color: transparent; }
+.chip:hover { border-color: var(--tc-fg, var(--accent)); color: var(--tc-fg, var(--accent)); }
+.chip[aria-pressed="true"] { background: var(--tc-fg, var(--accent)); border-color: var(--tc-fg, var(--accent)); color: var(--bg); }
 
 .month-head {
   font-family: var(--sans);
@@ -408,6 +438,8 @@ h3 { font-size: 1.1rem; margin: 1.8em 0 0.4em; }
 .row .t a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.97rem; }
 .row .t a:hover { color: var(--accent); }
 .row .t .tags { margin-top: 5px; }
+.row .t a.tag { color: var(--tc-fg, var(--accent)); font-weight: 400; font-size: 0.72rem; }
+.row .t a.tag:hover { color: var(--bg); }
 .row .v { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 @media (max-width: 560px) {
@@ -476,7 +508,8 @@ h3 { font-size: 1.1rem; margin: 1.8em 0 0.4em; }
   text-decoration: none;
   color: var(--text);
 }
-.topic-card:hover { border-color: var(--accent); }
+.topic-card[class*="tc-"] { border-left: 4px solid var(--tc-fg); }
+.topic-card:hover { border-color: var(--tc-fg, var(--accent)); }
 .topic-card .n { color: var(--faint); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
 
 /* ---------- footer ---------- */
