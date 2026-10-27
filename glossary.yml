@@ -93,3 +93,295 @@ statistical power:
 time series:
   definition: "A sequence of measurements of the same quantity taken at regular intervals over time."
   aliases: [time-series]
+
+meta-analysis:
+  definition: "A study that pools the results of many earlier studies on the same question to estimate an overall effect and what makes it vary."
+  aliases: ["meta-analyses", "meta-analytic"]
+
+free recall:
+  definition: "A memory test in which people write down everything they can remember from a list, in any order, with no hints."
+
+cued recall:
+  definition: "A memory test in which people are given a hint, such as the word that was paired with the target, and asked to supply the item that went with it."
+
+publication bias:
+  definition: "The tendency for studies with striking or positive results to be published more often than studies that found nothing, which can inflate pooled estimates."
+
+within-subjects:
+  definition: "A study design in which the same people take part in every condition being compared, rather than different people in each."
+  aliases: ["within-subjects designs", "within-subjects design"]
+
+scaling law:
+  definition: "A formula, fitted to experiments, that predicts how a system's performance changes as it is made larger or given more resources."
+  aliases: ["scaling laws"]
+
+power law:
+  definition: "A relationship in which one quantity changes in proportion to another raised to a fixed power, so it looks like a straight line on a log-log plot."
+  aliases: ["power laws"]
+
+compute-optimal:
+  definition: "Describing the split between model size and amount of training text that gives the best result for a fixed amount of computing."
+
+learning rate:
+  definition: "A setting that controls how large an adjustment a model makes to itself after each batch of training examples."
+  aliases: ["learning rates"]
+
+confidence interval:
+  definition: "A range of values, calculated from data, that is meant to show how precisely a quantity has been estimated."
+  aliases: ["confidence intervals"]
+
+common-value auction:
+  definition: "An auction for something that is worth about the same to every bidder, though no bidder knows exactly how much."
+  aliases: ["common-value auctions", "common value auction", "common value auctions"]
+
+"winner's curse":
+  definition: "The tendency for the winner of an auction for something of uncertain value to have paid more than it is worth, because the highest bid usually comes from the most optimistic guess."
+  aliases: ["winners curse"]
+
+Nash equilibrium:
+  definition: "A situation in a game where no player can do better by changing their own choice while everyone else keeps theirs."
+  aliases: ["Nash equilibria"]
+
+discount rate:
+  definition: "The yearly rate used to shrink money received in the future to what it is worth today."
+  aliases: ["discount rates"]
+
+emergent ability:
+  definition: "A skill that seems absent in smaller AI models and then appears in larger ones, in a way that trends from the smaller models would not have predicted."
+  aliases: ["emergent abilities"]
+
+exact match:
+  definition: "A way of scoring an answer that gives full credit only if it is completely right and nothing otherwise."
+  aliases: ["exact-match", "exact string match"]
+
+Brier score:
+  definition: "A measure of how far a forecaster's stated probabilities were from what actually happened, where lower is better."
+  aliases: ["Brier scores"]
+
+pre-training loss:
+  definition: "A number showing how badly a language model predicts the next piece of text in its training material, where lower means better prediction."
+  aliases: ["pretraining loss"]
+
+in-context learning:
+  definition: "A language model's ability to do a task from instructions or examples given in the prompt, without being retrained."
+
+Hawthorne effect:
+  definition: "The claim that people change how they behave because they know they are being studied or watched."
+  aliases: ["Hawthorne effects"]
+
+systematic review:
+  definition: "A study that searches for every piece of research on a question using set rules and then summarises what they found together."
+  aliases: ["systematic reviews"]
+
+odds ratio:
+  definition: "A number comparing how likely an outcome is in one group with how likely it is in another, where 1 means no difference."
+  aliases: ["odds ratios"]
+
+confounding:
+  definition: "When a third factor that moves alongside the thing being studied makes it look as if one causes the other."
+  aliases: ["confounder", "confounders", "confounded"]
+
+sycophancy:
+  definition: "The tendency of an AI model to shape its answers to agree with what the user seems to believe or want."
+  aliases: ["sycophantic"]
+
+reinforcement learning from human feedback:
+  definition: "A way of training an AI model by having people rate its answers and then adjusting the model to produce answers like the highly rated ones."
+  aliases: ["RLHF"]
+
+fine-tuning:
+  definition: "Further training of an already trained AI model on a smaller, chosen set of examples to change how it behaves."
+  aliases: ["fine-tuned", "finetuning", "fine-tune"]
+
+user equilibrium:
+  definition: "The pattern of traffic that results when every driver takes whichever route is quickest for them given everyone else's choices."
+  aliases: ["user optimal flow", "user optimum"]
+
+price of anarchy:
+  definition: "How much worse a shared outcome gets when everyone acts for themselves, compared with the best arrangement a central planner could choose."
+
+"Braess's paradox":
+  definition: "The finding that adding a route to a congested network can make every traveller's journey slower."
+  aliases: ["Braess paradox"]
+
+model collapse:
+  definition: "A gradual loss of variety and accuracy in AI models that are trained, round after round, on output produced by earlier models."
+
+synthetic data:
+  definition: "Data produced by a computer model rather than collected from real people or events."
+
+variational autoencoder:
+  definition: "A type of AI model that learns to squeeze examples into a compact summary and rebuild new, similar examples from it."
+  aliases: ["variational autoencoders", "VAE", "VAEs"]
+
+thought experiment:
+  definition: "An imagined scenario used to test an idea by asking what we would judge or expect if it were real."
+  aliases: ["thought experiments"]
+
+status quo bias:
+  definition: "A tendency to prefer the current state of affairs over a change, even when the alternative is no worse."
+
+experimental philosophy:
+  definition: "The use of surveys and experiments to study how people respond to questions that philosophers argue about."
+
+vignette:
+  definition: "A short written story given to participants in a study, who are then asked to make a judgement about it."
+  aliases: ["vignettes"]
+
+data contamination:
+  definition: "When the questions used to test an AI model, or close copies of them, were already in the material it learned from."
+  aliases: ["benchmark contamination"]
+
+overfitting:
+  definition: "When a model fits the quirks of the particular examples it was tuned on so closely that it does worse on new examples."
+  aliases: ["overfit", "overfits", "overfitted"]
+
+large language model:
+  definition: "A computer program trained on very large amounts of text to predict and produce written language."
+  aliases: ["large language models", "LLM", "LLMs"]
+
+Red Queen hypothesis:
+  definition: "The idea that species must keep evolving just to keep pace with the other species, such as parasites, that are evolving around them."
+  aliases: ["Red Queen"]
+
+outcrossing:
+  definition: "Reproduction in which an individual mates with a different individual rather than fertilising its own eggs."
+  aliases: ["outcross", "outcrossed"]
+
+self-fertilisation:
+  definition: "Reproduction in which one individual fertilises its own eggs, so offspring get genes from a single parent."
+  aliases: ["self-fertilization", "selfing", "self-fertilising", "self-fertilizing"]
+
+recombination:
+  definition: "The shuffling of genes from two parents into new combinations during sexual reproduction."
+  aliases: ["genetic recombination"]
+
+coevolution:
+  definition: "Evolution in which two species, such as a host and its parasite, keep adapting in response to each other."
+  aliases: ["coevolving", "coevolve", "coevolved"]
+
+context window:
+  definition: "The maximum amount of text a language model can take in and consider at once."
+  aliases: ["context size", "context sizes", "context length"]
+
+retrieval-augmented generation:
+  definition: "A way of using a language model in which relevant documents are first looked up and then given to the model along with the question."
+  aliases: ["retrieval augmented generation", "RAG"]
+
+needle-in-a-haystack:
+  definition: "A test in which a single fact is hidden somewhere in a long text and a model is asked to find it."
+  aliases: ["needle in a haystack"]
+
+encoder-decoder:
+  definition: "A model design with one part that reads the whole input and a second part that writes the output."
+  aliases: ["encoder-decoder model", "encoder-decoder models"]
+
+preprint:
+  definition: "A research paper shared publicly before, or without, formal peer review by a journal."
+  aliases: ["preprints"]
+
+hot hand:
+  definition: "The idea that someone who has just succeeded several times in a row is more likely than usual to succeed on the next try."
+  aliases: ["hot-hand", "hot hand fallacy"]
+
+streak selection bias:
+  definition: "A downward distortion that appears when you measure what happens right after a run of outcomes within a short sequence, even when every outcome is pure chance."
+
+law of small numbers:
+  definition: "The habit of expecting small samples to look as balanced as the long-run averages they come from."
+
+randomised controlled trial:
+  definition: "A study in which chance decides who or what gets a treatment, so that later differences can be put down to the treatment."
+  aliases: ["randomized controlled trial", "randomised controlled trials", "randomized controlled trials", "RCT", "RCTs"]
+
+preregistered:
+  definition: "Describes a study whose plan and main analyses were published before the data were collected."
+  aliases: ["pre-registered", "preregistration", "pre-registration"]
+
+staggered rollout:
+  definition: "Introducing a change to different groups at different times, so that groups that have it can be compared with groups that do not yet."
+
+mere exposure effect:
+  definition: "The tendency for people to like something more simply because they have seen or heard it more often."
+  aliases: ["mere exposure", "exposure effect"]
+
+control group:
+  definition: "The people in a study who do not receive the treatment, so that the treated group can be compared against them."
+  aliases: ["control groups"]
+
+reward model:
+  definition: "A model trained to predict which of two outputs people would prefer, used to score an AI system's outputs during training."
+  aliases: ["reward models", "preference model", "preference models"]
+
+"Goodhart's law":
+  definition: "The observation that a measure stops tracking what it was meant to track once people or systems aim directly at raising it."
+  aliases: ["Goodhart effect", "Goodhart effects"]
+
+KL divergence:
+  definition: "A number measuring how different one probability distribution is from another, here how far a trained model has moved from where it started."
+  aliases: ["Kullback-Leibler divergence"]
+
+best-of-n sampling:
+  definition: "Generating several candidate outputs and keeping the one that scores highest."
+  aliases: ["best-of-n"]
+
+reward hacking:
+  definition: "When an AI system gets a high score on its training reward in ways its designers did not intend and do not want."
+  aliases: ["reward gaming", "specification gaming"]
+
+placebo test:
+  definition: "A check that runs the same analysis where no effect should exist, such as before a change happened, to see whether the method finds one anyway."
+  aliases: ["placebo tests"]
+
+log points:
+  definition: "A way of measuring proportional change, where 0.1 log points is roughly a 10 percent increase for small changes."
+  aliases: ["log point"]
+
+chain of thought:
+  definition: "Step-by-step reasoning that a language model writes out before giving its final answer."
+  aliases: ["chain-of-thought"]
+
+reasoning model:
+  definition: "A language model trained to write out long reasoning before it answers."
+  aliases: ["reasoning models"]
+
+inverse scaling:
+  definition: "A pattern where a model gets worse at something as it is made larger."
+
+supercooling:
+  definition: "When a liquid cools below its normal freezing point without turning solid, because ice has not yet started to form."
+  aliases: ["supercooled"]
+
+nucleation:
+  definition: "The first formation of a tiny seed of a new phase, such as a speck of ice in water, from which the rest can grow."
+
+thermocouple:
+  definition: "A temperature sensor made from two different metals joined together, which produce a small voltage that changes with temperature."
+  aliases: ["thermocouples"]
+
+Markov process:
+  definition: "A random process in which what happens next depends only on the current state, not on how the system got there."
+  aliases: ["Markov processes", "Markovian"]
+
+colloidal:
+  definition: "Describing very small particles, typically less than a thousandth of a millimetre across, suspended in a liquid."
+  aliases: ["colloid", "colloids"]
+
+perplexity:
+  definition: "A measure of how surprised a language model is by a piece of text; predictable wording gives low perplexity."
+
+false positive rate:
+  definition: "The share of cases that are truly negative which a test nonetheless wrongly labels as positive."
+  aliases: ["false positive rates"]
+
+base rate:
+  definition: "How common something is in the group being tested, before any test result is known."
+  aliases: ["base rates"]
+
+watermark:
+  definition: "A hidden statistical pattern deliberately built into generated text so that it can later be recognised as machine-made."
+  aliases: ["watermarking", "watermarked"]
+
+p-value:
+  definition: "The probability of seeing a result at least this extreme if there were really nothing going on."
+  aliases: ["p-values"]
