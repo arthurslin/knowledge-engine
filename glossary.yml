@@ -395,3 +395,17 @@ information rate:
 
 conditional entropy:
   definition: "A measure of how unpredictable something is once you already know what came just before it."
+
+capture the flag:
+  definition: "A hacking exercise in which the goal is to break into a prepared system and retrieve a hidden piece of data."
+  aliases: ["capture-the-flag"]
+
+supply-chain attack:
+  definition: "An attack that slips harmful code into software that other people depend on, so it spreads to everyone who uses it."
+  aliases: ["supply-chain attacks", "supply chain attack"]
+
+evaluation awareness:
+  definition: "A model noticing, or saying, that it is probably being tested rather than used for real."
+
+motivated reasoning:
+  definition: "Reasoning that bends toward a conclusion already preferred, rather than following the evidence."
