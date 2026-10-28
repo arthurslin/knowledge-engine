@@ -385,3 +385,13 @@ watermark:
 p-value:
   definition: "The probability of seeing a result at least this extreme if there were really nothing going on."
   aliases: ["p-values"]
+
+information density:
+  definition: "How much information, in bits, each unit of speech such as a syllable carries on average."
+
+information rate:
+  definition: "How much information a speaker conveys per second, found by multiplying information per syllable by syllables per second."
+  aliases: ["information rates"]
+
+conditional entropy:
+  definition: "A measure of how unpredictable something is once you already know what came just before it."
