@@ -415,3 +415,10 @@ human factors:
 
 flight management computer:
   definition: "The aircraft computer that plans the route and can steer the plane along it automatically."
+
+world model:
+  definition: "An AI system that predicts how a scene or environment changes in response to actions, so it can generate or simulate a world someone can move through."
+  aliases: [world models]
+
+research preview:
+  definition: "An early release of a product to a limited group of users so the developer can gather feedback before a wider launch."
