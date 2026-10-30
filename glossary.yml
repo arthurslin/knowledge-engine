@@ -437,3 +437,10 @@ squared error:
 empirical Bayes:
   definition: "A family of methods that use the spread of many related measurements to decide how much to trust each single one."
 
+mixture of experts:
+  definition: "A model design split into many sub-networks, where only a few of them are switched on for each piece of input, so most of the model sits idle at any moment."
+  aliases: [mixture-of-experts]
+
+open-weight:
+  definition: "Describes an AI model whose trained parameters are published so anyone can download and run it, even if the training data and code are not."
+  aliases: [open weights, open-weight models]
