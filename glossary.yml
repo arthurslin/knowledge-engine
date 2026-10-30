@@ -422,3 +422,18 @@ world model:
 
 research preview:
   definition: "An early release of a product to a limited group of users so the developer can gather feedback before a wider launch."
+
+admissible:
+  definition: "Said of an estimation method when no other method is at least as accurate in every possible situation and more accurate in some."
+  aliases: [inadmissible, admissibility]
+
+James-Stein estimator:
+  definition: "A method that estimates several averages at once by pulling each one toward their overall mean, which lowers the total error when there are three or more."
+
+squared error:
+  definition: "The difference between an estimate and the true value, multiplied by itself, so that large misses count much more than small ones."
+  aliases: [total squared error, mean squared error]
+
+empirical Bayes:
+  definition: "A family of methods that use the spread of many related measurements to decide how much to trust each single one."
+
