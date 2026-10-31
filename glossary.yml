@@ -451,3 +451,14 @@ hemispheric lateralisation:
 
 post hoc:
   definition: "Describes an analysis chosen after looking at the data, which makes a chance pattern easier to mistake for a real one."
+
+AI agent:
+  definition: "An AI system that carries out multi-step tasks on its own, such as running code or using tools, rather than only answering one message at a time."
+  aliases: [AI agents, coding agent, coding agents]
+
+system prompt:
+  definition: "Instructions given to a chatbot by whoever deploys it, usually hidden from the person typing to it."
+  aliases: [system prompts]
+
+causal inference:
+  definition: "Methods for working out whether one thing actually causes another, rather than merely going along with it."
