@@ -444,3 +444,10 @@ mixture of experts:
 open-weight:
   definition: "Describes an AI model whose trained parameters are published so anyone can download and run it, even if the training data and code are not."
   aliases: [open weights, open-weight models]
+
+hemispheric lateralisation:
+  definition: "The way some tasks rely more on one half of the brain than the other."
+  aliases: [lateralisation, lateralization, hemispheric lateralization]
+
+post hoc:
+  definition: "Describes an analysis chosen after looking at the data, which makes a chance pattern easier to mistake for a real one."
