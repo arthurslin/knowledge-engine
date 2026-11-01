@@ -474,3 +474,20 @@ random assignment:
   definition: "Putting each participant into a study condition by chance, so that the groups differ only in what the researchers changed."
   aliases: [randomly assigned]
 
+token:
+  definition: "A small chunk of text, often a word or part of a word, that a language model reads or writes as one unit."
+  aliases: [tokens]
+
+inference engine:
+  definition: "The software that runs a trained AI model on hardware to answer requests."
+  aliases: [inference engines]
+
+KV cache:
+  definition: "Working memory a language model keeps while processing a request, storing intermediate results for the text it has already read."
+  aliases: [KV caches]
+
+prefill:
+  definition: "The first stage of answering a request, in which the model reads the whole prompt before it starts writing a reply."
+
+tenant isolation:
+  definition: "Keeping each customer's data separate when many customers share the same computers or service."
