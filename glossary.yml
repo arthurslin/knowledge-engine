@@ -462,3 +462,15 @@ system prompt:
 
 causal inference:
   definition: "Methods for working out whether one thing actually causes another, rather than merely going along with it."
+
+side-effect effect:
+  definition: "The finding that people judge a foreseen side effect as more intentional when it is harmful than when it is helpful."
+  aliases: [Knobe effect]
+
+theory of mind:
+  definition: "The everyday ability to work out what other people believe, want and intend."
+
+random assignment:
+  definition: "Putting each participant into a study condition by chance, so that the groups differ only in what the researchers changed."
+  aliases: [randomly assigned]
+
