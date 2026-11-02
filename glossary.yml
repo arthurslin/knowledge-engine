@@ -509,3 +509,19 @@ minimum-norm solution:
 
 early stopping:
   definition: "Ending a model's training before it finishes fitting the training data, at the point where its error on held-out data is lowest."
+
+human-in-the-loop:
+  definition: "A design in which a person must review or approve certain actions before an automated system can carry them out."
+  aliases: [HITL]
+
+one-time passcode:
+  definition: "A short code, usually sent by email or text message, that works only once and confirms a request came from the account owner."
+  aliases: [one-time passcodes, one-time code, one-time codes]
+
+prompt injection:
+  definition: "Text hidden in content an AI system reads, such as an email or web page, that tries to make it follow the attacker's instructions instead of the user's."
+  aliases: [prompt injections]
+
+stablecoin:
+  definition: "A cryptocurrency designed to keep a fixed value, usually one US dollar per coin."
+  aliases: [stablecoins]
