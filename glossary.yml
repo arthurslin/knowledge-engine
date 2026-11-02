@@ -491,3 +491,21 @@ prefill:
 
 tenant isolation:
   definition: "Keeping each customer's data separate when many customers share the same computers or service."
+
+bias-variance trade-off:
+  definition: "The classical idea that a model too simple misses real patterns while a model too flexible chases noise, so the best model sits in between."
+
+double descent:
+  definition: "A pattern where a model's error on new data falls, rises to a peak, then falls again as the model is made larger."
+
+interpolation threshold:
+  definition: "The model size at which a model first has just enough capacity to fit every training example exactly."
+
+label noise:
+  definition: "Training examples whose recorded answers are wrong, whether by accident or on purpose in an experiment."
+
+minimum-norm solution:
+  definition: "Among all settings of a model that fit the training data perfectly, the one with the smallest overall size of its numbers, which tends to be the smoothest."
+
+early stopping:
+  definition: "Ending a model's training before it finishes fitting the training data, at the point where its error on held-out data is lowest."
