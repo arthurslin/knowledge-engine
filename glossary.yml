@@ -525,3 +525,13 @@ prompt injection:
 stablecoin:
   definition: "A cryptocurrency designed to keep a fixed value, usually one US dollar per coin."
   aliases: [stablecoins]
+
+ice core:
+  definition: "A long cylinder of ice drilled from a glacier or ice sheet, whose layers preserve air, dust and chemicals from the years the snow fell."
+  aliases: [ice cores]
+
+smelting:
+  definition: "Heating ore to a high temperature to extract the metal from it."
+
+radiocarbon dating:
+  definition: "Estimating the age of once-living material from how much of a slowly decaying form of carbon it still contains."
