@@ -535,3 +535,17 @@ smelting:
 
 radiocarbon dating:
   definition: "Estimating the age of once-living material from how much of a slowly decaying form of carbon it still contains."
+
+emergent misalignment:
+  definition: "When training a model on a narrow kind of bad behaviour makes it behave badly in many unrelated situations too."
+
+red team:
+  definition: "A group, person or system whose job is to attack a defence on purpose to find its weaknesses."
+  aliases: [red-team, red teaming, red-teaming]
+
+classifier:
+  definition: "A model that sorts inputs into categories, such as flagged or not flagged."
+  aliases: [classifiers]
+
+data poisoning:
+  definition: "Deliberately slipping harmful examples into the material a model learns from so that it learns unwanted behaviour."
