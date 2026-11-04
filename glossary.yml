@@ -562,3 +562,13 @@ Jensen's inequality:
 root exudates:
   definition: "Chemicals that plant roots release into the surrounding soil."
   aliases: [root exudate, exudates]
+
+dual-use:
+  definition: "Useful both for protection and for harm, such as a tool that can find software flaws to fix or to attack."
+
+hallucination rate:
+  definition: "How often an AI model gives a confident answer that is false, measured in a specific way by each test."
+
+evaluation harness:
+  definition: "The software setup that feeds a test to an AI model and scores its answers, whose settings can change the results."
+  aliases: [harness]
