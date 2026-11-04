@@ -549,3 +549,16 @@ classifier:
 
 data poisoning:
   definition: "Deliberately slipping harmful examples into the material a model learns from so that it learns unwanted behaviour."
+
+kin selection:
+  definition: "Evolution favouring behaviour that helps relatives, because relatives carry many of the same genes."
+
+kin recognition:
+  definition: "The ability of an organism to treat relatives differently from unrelated individuals."
+
+Jensen's inequality:
+  definition: "The mathematical fact that averaging a curved relationship gives a different result from applying the relationship to the average."
+
+root exudates:
+  definition: "Chemicals that plant roots release into the surrounding soil."
+  aliases: [root exudate, exudates]
