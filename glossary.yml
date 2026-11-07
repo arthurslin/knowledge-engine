@@ -585,3 +585,9 @@ person-years:
 cohort:
   definition: "A group of people defined by a shared starting point, such as being diagnosed in the same years, and followed over time."
   aliases: [cohorts]
+reinforcement learning:
+  definition: "A way of training a model by letting it try actions and rewarding the outcomes it reaches, so it learns which behaviour pays off."
+GRPO:
+  definition: "Group relative policy optimisation, a reinforcement learning method that scores each attempt against other attempts at the same task."
+process supervision:
+  definition: "Training that rewards each intermediate step of a task, not only the final outcome."
