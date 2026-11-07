@@ -572,3 +572,16 @@ hallucination rate:
 evaluation harness:
   definition: "The software setup that feeds a test to an AI model and scores its answers, whose settings can change the results."
   aliases: [harness]
+stage migration:
+  definition: "When patients are moved into a different disease stage because of new tests or rules, rather than because their illness changed."
+  aliases: [Will Rogers phenomenon]
+metastasis:
+  definition: "Cancer that has spread from where it started to another part of the body."
+  aliases: [metastases]
+Gleason score:
+  definition: "A pathologist's rating of how abnormal prostate cancer cells look under the microscope, with higher numbers meaning more aggressive cancer."
+person-years:
+  definition: "A count that adds up how many years each person in a study was followed, so that people watched for different lengths of time can be combined."
+cohort:
+  definition: "A group of people defined by a shared starting point, such as being diagnosed in the same years, and followed over time."
+  aliases: [cohorts]
