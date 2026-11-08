@@ -605,3 +605,15 @@ convection:
 
 interstitial gas:
   definition: "The air or other gas filling the small spaces between grains in a pile or container of particles."
+
+Responsible Scaling Policy:
+  definition: "Anthropic's published framework that ties how it develops and releases AI models to the risk levels those models are judged to reach."
+  aliases: [RSP]
+
+Epoch Capabilities Index:
+  definition: "A single score, developed by the research group Epoch AI, that combines results from many AI benchmarks to track overall model ability over time."
+  aliases: [ECI]
+
+full-time equivalent:
+  definition: "A way of counting staff effort in which, for example, two people each working half time count as one full-time worker."
+  aliases: [full-time equivalents]
