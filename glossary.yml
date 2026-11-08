@@ -591,3 +591,17 @@ GRPO:
   definition: "Group relative policy optimisation, a reinforcement learning method that scores each attempt against other attempts at the same task."
 process supervision:
   definition: "Training that rewards each intermediate step of a task, not only the final outcome."
+
+granular material:
+  definition: "A collection of many separate solid grains, such as sand, rice or powder, that can flow but is neither a true liquid nor a true solid."
+  aliases: [granular materials, granular media]
+
+Monte Carlo simulation:
+  definition: "A computer method that studies a system by running many repeated random trials and looking at what usually happens."
+  aliases: [Monte Carlo simulations, Monte Carlo method]
+
+convection:
+  definition: "A slow circulating flow in which material rises in one place and sinks in another, carrying things along with it."
+
+interstitial gas:
+  definition: "The air or other gas filling the small spaces between grains in a pile or container of particles."
