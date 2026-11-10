@@ -617,3 +617,13 @@ Epoch Capabilities Index:
 full-time equivalent:
   definition: "A way of counting staff effort in which, for example, two people each working half time count as one full-time worker."
   aliases: [full-time equivalents]
+
+choice overload:
+  definition: "The claim that offering more options can make people less likely to choose anything, or less satisfied with what they pick."
+
+heterogeneity:
+  definition: "How much the results of different studies on the same question disagree with each other, beyond what chance alone would produce."
+
+moderator:
+  definition: "A condition that changes how strong an effect is, or whether it appears at all."
+  aliases: [moderators]
