@@ -627,3 +627,15 @@ heterogeneity:
 moderator:
   definition: "A condition that changes how strong an effect is, or whether it appears at all."
   aliases: [moderators]
+
+cryo-electron microscopy:
+  definition: "A method that images flash-frozen molecules with an electron beam and combines many pictures into a 3D model."
+  aliases: [cryo-EM]
+
+bacteriophage:
+  definition: "A virus that infects bacteria."
+  aliases: [bacteriophages, phage, phages]
+
+size-exclusion chromatography:
+  definition: "A way of separating molecules by size, by passing a mixture through a column packed with porous beads."
+  aliases: [size-exclusion column]
