@@ -639,3 +639,25 @@ bacteriophage:
 size-exclusion chromatography:
   definition: "A way of separating molecules by size, by passing a mixture through a column packed with porous beads."
   aliases: [size-exclusion column]
+
+paradox of enrichment:
+  definition: "The prediction that giving prey more food can make a predator-prey system less stable rather than more."
+
+functional response:
+  definition: "How fast a predator eats as the amount of prey around it changes."
+  aliases: [functional responses]
+
+carrying capacity:
+  definition: "The largest population an environment can support over the long run."
+
+limit cycle:
+  definition: "A repeating rise-and-fall pattern that a system settles into instead of a steady level."
+  aliases: [limit cycles]
+
+Hopf bifurcation:
+  definition: "The point at which a steady system tips into regular oscillation as a setting is changed."
+  aliases: [Hopf bifurcations]
+
+chemostat:
+  definition: "A culture vessel that continuously receives fresh nutrient liquid while an equal volume flows out."
+  aliases: [chemostats]
