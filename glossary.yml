@@ -661,3 +661,18 @@ Hopf bifurcation:
 chemostat:
   definition: "A culture vessel that continuously receives fresh nutrient liquid while an equal volume flows out."
   aliases: [chemostats]
+
+data centre:
+  definition: "A building full of computers that store data and run software, including AI models, for many users."
+  aliases: [data centres, data center, data centers]
+
+moratorium:
+  definition: "A temporary pause on approving or building something, usually for a set number of months."
+  aliases: [moratoriums]
+
+megawatt:
+  definition: "A unit of power equal to one million watts, roughly what several hundred homes use at once."
+  aliases: [megawatts]
+
+certification:
+  definition: "The official step in which election authorities confirm final vote counts after checking all ballots."
