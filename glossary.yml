@@ -676,3 +676,17 @@ megawatt:
 
 certification:
   definition: "The official step in which election authorities confirm final vote counts after checking all ballots."
+
+resonance:
+  definition: "A large build-up of vibration that happens when something is pushed repeatedly at the same rhythm it naturally swings at."
+  aliases: [forced resonance, resonant]
+
+flutter:
+  definition: "A shaking or twisting motion that grows on its own because the structure's movement changes the airflow so the wind keeps pushing it further."
+  aliases: [aeroelastic flutter, torsional flutter]
+
+negative damping:
+  definition: "A situation where the surroundings feed energy into a motion on each cycle instead of draining it away, so the motion grows."
+
+vortex shedding:
+  definition: "The regular peeling-off of swirls of air or water, first from one side and then the other, behind an object in a flow."
