@@ -690,3 +690,21 @@ negative damping:
 
 vortex shedding:
   definition: "The regular peeling-off of swirls of air or water, first from one side and then the other, behind an object in a flow."
+
+formal verification:
+  definition: "Using mathematical proof, usually checked by a computer, to show that a program does exactly what a written specification says."
+  aliases: [formally verified]
+
+proof assistant:
+  definition: "A computer program that checks every step of a mathematical proof and accepts it only if each step follows from the rules."
+  aliases: [proof assistants]
+
+forward secrecy:
+  definition: "A guarantee that if someone steals a device's keys today, they still cannot read messages sent before the theft."
+
+post-compromise security:
+  definition: "A guarantee that after a device's keys are stolen, later messages become secret again once the protocol refreshes its keys."
+
+trusted computing base:
+  definition: "The parts of a system that are assumed to be correct rather than checked, so any error in them could undo the guarantees."
+  aliases: [trusted base]
