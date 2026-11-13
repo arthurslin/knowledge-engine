@@ -708,3 +708,13 @@ post-compromise security:
 trusted computing base:
   definition: "The parts of a system that are assumed to be correct rather than checked, so any error in them could undo the guarantees."
   aliases: [trusted base]
+
+retrieval-induced forgetting:
+  definition: "The finding that practising recall of some memories can make related memories that were not practised harder to recall later."
+
+retrieval practice:
+  definition: "Trying to bring something back to mind from memory, rather than simply reading it again."
+
+independent-cue test:
+  definition: "A memory test that asks for an item using a different prompt from the one it was learned with, to see whether forgetting follows the item itself."
+  aliases: [independent-cue procedure, independent cue procedure]
