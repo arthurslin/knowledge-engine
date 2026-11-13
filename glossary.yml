@@ -718,3 +718,21 @@ retrieval practice:
 independent-cue test:
   definition: "A memory test that asks for an item using a different prompt from the one it was learned with, to see whether forgetting follows the item itself."
   aliases: [independent-cue procedure, independent cue procedure]
+
+zero data retention:
+  definition: "A promise by a service that it will not store the data customers send it after it has processed each request."
+  aliases: [ZDR]
+
+LLMjacking:
+  definition: "Stealing access to someone else's paid AI model account and using or reselling it without paying."
+
+environment variable:
+  definition: "A named setting passed to a running program, often used to hand it passwords or keys without writing them into the code."
+  aliases: [environment variables]
+
+API key:
+  definition: "A secret string that a program presents to an online service to prove it is allowed to use that service."
+  aliases: [API keys]
+
+model weights:
+  definition: "The learned numbers inside an AI model that determine how it turns inputs into outputs."
