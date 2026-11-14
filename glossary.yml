@@ -736,3 +736,15 @@ API key:
 
 model weights:
   definition: "The learned numbers inside an AI model that determine how it turns inputs into outputs."
+
+golden section:
+  definition: "The proportion of about 1.618 to 1 that comes from splitting a line so the whole is to the longer part as the longer part is to the shorter."
+  aliases: [golden ratio, golden rectangle, golden proportion]
+
+paired comparison:
+  definition: "A test in which people see two options at a time and pick one, repeated across many pairs to build up an order of preference."
+  aliases: [paired comparisons, pairwise comparison, pairwise comparisons]
+
+between-subjects:
+  definition: "A study design in which different groups of people each take part in only one of the conditions being compared."
+  aliases: [between-subjects design, between-subject]
