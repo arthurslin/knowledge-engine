@@ -761,3 +761,22 @@ public nuisance:
 
 representative standing:
   definition: "The right to bring a case on behalf of a wider group or the public, rather than only for a harm done to yourself."
+
+Gettier case:
+  definition: "An imagined story in which someone has a true, well-supported belief that is true only by luck, used to ask whether that person really knows."
+  aliases: [Gettier cases, Gettier-style]
+
+justified true belief:
+  definition: "The traditional definition of knowledge: believing something that is true, for good reasons."
+
+epistemology:
+  definition: "The branch of philosophy that studies knowledge, belief and what makes a belief reasonable."
+  aliases: [epistemic]
+
+percentage point:
+  definition: "The plain difference between two percentages, so a move from 40 to 45 percent is a rise of 5 percentage points."
+  aliases: [percentage points]
+
+survey panel:
+  definition: "A standing group of people who have agreed to answer surveys repeatedly, so researchers can ask them new questions over time."
+  aliases: [survey panels]
