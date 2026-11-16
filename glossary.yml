@@ -780,3 +780,24 @@ percentage point:
 survey panel:
   definition: "A standing group of people who have agreed to answer surveys repeatedly, so researchers can ask them new questions over time."
   aliases: [survey panels]
+
+reversal curse:
+  definition: "The finding that a language model trained on a fact stated one way round, such as 'A is B', often cannot recall it when asked the other way round."
+
+parameter:
+  definition: "One of the adjustable numbers inside an AI model that training tunes; model size is usually counted in them."
+  aliases: [parameters]
+
+reverse training:
+  definition: "Training a language model on each text both in its normal order and with its words reversed, so that facts are seen from both directions."
+
+system card:
+  definition: "A report an AI company publishes with a model release, describing its tests of the model's abilities, risks and safeguards."
+  aliases: [system cards]
+
+benchmark:
+  definition: "A fixed set of tasks used to score and compare AI systems."
+  aliases: [benchmarks]
+
+Elo rating:
+  definition: "A score computed from many head-to-head comparisons, where beating a higher-rated opponent raises the score more than beating a lower-rated one."
