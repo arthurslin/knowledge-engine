@@ -801,3 +801,16 @@ benchmark:
 
 Elo rating:
   definition: "A score computed from many head-to-head comparisons, where beating a higher-rated opponent raises the score more than beating a lower-rated one."
+
+natural experiment:
+  definition: "A situation where something outside researchers' control splits people or places into groups in a way that is close to random, letting them be compared as if in a trial."
+  aliases: [natural experiments]
+
+difference-in-differences:
+  definition: "A method that compares how much an outcome changed over time in a group affected by some event with how much it changed in a group that was not."
+
+lactase persistence:
+  definition: "The ability, common in some populations and rare in others, to keep digesting milk sugar after childhood."
+
+spatial autocorrelation:
+  definition: "The tendency of places near each other to have similar values, which can make a pattern across a map look more certain than it is."
