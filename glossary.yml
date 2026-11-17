@@ -814,3 +814,10 @@ lactase persistence:
 
 spatial autocorrelation:
   definition: "The tendency of places near each other to have similar values, which can make a pattern across a map look more certain than it is."
+
+sandbox:
+  definition: "A walled-off computer environment meant to let software run without being able to reach or affect outside systems."
+  aliases: [sandboxes]
+
+disgorgement:
+  definition: "A court order making someone give up money they gained through wrongdoing."
