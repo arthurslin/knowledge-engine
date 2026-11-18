@@ -821,3 +821,20 @@ sandbox:
 
 disgorgement:
   definition: "A court order making someone give up money they gained through wrongdoing."
+
+other-initiated repair:
+  definition: "When a listener signals that they did not hear or understand what was just said, prompting the speaker to fix it, for example by saying 'huh?' or 'who?'."
+
+interjection:
+  definition: "A short word that stands alone as an utterance, such as 'oh', 'wow' or 'huh', rather than fitting into a sentence's grammar."
+  aliases: [interjections]
+
+convergent evolution:
+  definition: "The process by which unrelated things develop similar features because they face similar demands, not because they share an ancestor."
+
+formant:
+  definition: "A band of strong sound energy at a particular pitch that the shape of the mouth and throat produces, which listeners use to tell vowels apart."
+  aliases: [formants]
+
+glottal stop:
+  definition: "A brief catch made by closing the vocal folds, like the break in the middle of 'uh-oh'."
