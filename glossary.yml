@@ -838,3 +838,10 @@ formant:
 
 glottal stop:
   definition: "A brief catch made by closing the vocal folds, like the break in the middle of 'uh-oh'."
+
+jailbreak:
+  definition: "A prompt or technique that gets an AI model to do something its safety rules are meant to block."
+  aliases: [jailbreaks]
+
+Preparedness Framework:
+  definition: "OpenAI's published policy for rating how dangerous a model's capabilities are in areas such as cybersecurity and biology, and which safeguards each rating requires."
