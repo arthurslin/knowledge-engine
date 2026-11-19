@@ -854,5 +854,8 @@ collider bias:
   definition: "A misleading pattern created when a study selects or adjusts for something that two other factors both influence."
   aliases: [collider]
 
+En-ROADS:
+  definition: "A free online simulator that estimates how combinations of climate policies would change future warming."
+
 relative risk:
   definition: "How many times more likely an outcome is in one group than in another, where 1 means no difference."
