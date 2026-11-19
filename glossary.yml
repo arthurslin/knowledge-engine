@@ -845,3 +845,14 @@ jailbreak:
 
 Preparedness Framework:
   definition: "OpenAI's published policy for rating how dangerous a model's capabilities are in areas such as cybersecurity and biology, and which safeguards each rating requires."
+
+Berkson's bias:
+  definition: "A false link between two conditions that appears when a sample, such as hospital patients, is chosen in a way that both conditions make more likely."
+  aliases: [Berkson's paradox, admission rate bias]
+
+collider bias:
+  definition: "A misleading pattern created when a study selects or adjusts for something that two other factors both influence."
+  aliases: [collider]
+
+relative risk:
+  definition: "How many times more likely an outcome is in one group than in another, where 1 means no difference."
