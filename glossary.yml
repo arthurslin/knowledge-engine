@@ -859,3 +859,18 @@ En-ROADS:
 
 relative risk:
   definition: "How many times more likely an outcome is in one group than in another, where 1 means no difference."
+
+Bruce effect:
+  definition: "The loss of an early pregnancy in a female animal after she is exposed to an unfamiliar male."
+  aliases: [pregnancy block]
+
+oestrus:
+  definition: "The recurring period in many female mammals when they are fertile and willing to mate."
+  aliases: [estrus]
+
+major histocompatibility complex:
+  definition: "A group of genes that helps the immune system tell the body's own cells from foreign ones and differs between individuals."
+  aliases: [MHC]
+
+infanticide:
+  definition: "The killing of young offspring, in animals often by an adult male that is not the father."
