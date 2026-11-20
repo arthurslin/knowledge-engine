@@ -874,3 +874,14 @@ major histocompatibility complex:
 
 infanticide:
   definition: "The killing of young offspring, in animals often by an adult male that is not the father."
+
+Government Accountability Office:
+  definition: "The US Congress's independent auditor, which investigates how public money and programmes work and reports to lawmakers."
+  aliases: [GAO]
+
+covert testing:
+  definition: "An investigation in which testers pose as ordinary users without revealing who they are, to see how a system really behaves."
+  aliases: [covert test]
+
+ranking member:
+  definition: "The most senior member of the minority party on a US congressional committee."
