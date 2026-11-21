@@ -885,3 +885,12 @@ covert testing:
 
 ranking member:
   definition: "The most senior member of the minority party on a US congressional committee."
+
+retrospective voting:
+  definition: "Choosing whether to back an incumbent by looking back at how things went while they were in office."
+specification:
+  definition: "One particular set of choices about which data, controls and comparisons go into a statistical analysis."
+  aliases: [specifications]
+statistically significant:
+  definition: "Describes a result unlikely enough under the assumption of no real effect that researchers treat it as more than chance, by a conventional cutoff."
+  aliases: [statistical significance]
