@@ -894,3 +894,14 @@ specification:
 statistically significant:
   definition: "Describes a result unlikely enough under the assumption of no real effect that researchers treat it as more than chance, by a conventional cutoff."
   aliases: [statistical significance]
+
+penetration testing:
+  definition: "Attacking a system with permission to find weaknesses before real attackers do."
+  aliases: [penetration-testing, pen testing]
+zero-day:
+  definition: "A software flaw that attackers find or use before the software's makers know about it or have a fix."
+  aliases: [zero-days, 0-day]
+path traversal:
+  definition: "A flaw where a program accepts a file name that points outside the folder it meant to allow, letting someone read or write other files."
+reverse shell:
+  definition: "A connection a compromised machine makes back to the attacker, giving the attacker a command line on it."
