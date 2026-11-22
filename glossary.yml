@@ -916,3 +916,17 @@ acquaintance immunisation:
 cluster randomised trial:
   definition: "An experiment that randomly assigns whole groups, such as villages or schools, rather than individuals, to different treatments."
   aliases: [cluster randomised controlled trial, cluster randomized trial]
+
+hyperscale data centre:
+  definition: "A very large data centre, typically run by a big cloud or technology company, built to house many thousands of servers."
+  aliases: [hyperscale data centres, hyperscale data center, hyperscale data centers]
+
+TWh:
+  definition: "Terawatt-hour, a unit of energy equal to a billion kilowatt-hours, roughly what 95,000 US homes use in a year."
+  aliases: [terawatt-hour, terawatt-hours]
+
+load factor:
+  definition: "The share of its maximum power that a facility actually draws, averaged over a period of time."
+
+attributional:
+  definition: "A way of counting emissions that gives a user a share of the existing power mix, rather than asking which power plants ran extra because of that user's demand."
