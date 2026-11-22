@@ -905,3 +905,14 @@ path traversal:
   definition: "A flaw where a program accepts a file name that points outside the folder it meant to allow, letting someone read or write other files."
 reverse shell:
   definition: "A connection a compromised machine makes back to the attacker, giving the attacker a command line on it."
+
+friendship paradox:
+  definition: "The pattern, first described by Scott Feld in 1991, that on average a person's friends have more friends than the person does."
+
+acquaintance immunisation:
+  definition: "A vaccination strategy that picks people at random and vaccinates a contact each of them names, which tends to reach well-connected people without mapping the whole network."
+  aliases: [acquaintance immunization]
+
+cluster randomised trial:
+  definition: "An experiment that randomly assigns whole groups, such as villages or schools, rather than individuals, to different treatments."
+  aliases: [cluster randomised controlled trial, cluster randomized trial]
