@@ -930,3 +930,20 @@ load factor:
 
 attributional:
   definition: "A way of counting emissions that gives a user a share of the existing power mix, rather than asking which power plants ran extra because of that user's demand."
+
+bathtub curve:
+  definition: "A graph of failure risk over an item's life that starts high, drops to a low steady level, then rises again as the item wears out."
+
+infant mortality:
+  definition: "In reliability engineering, a raised chance that an item fails soon after it is made, installed or repaired."
+
+conditional probability of failure:
+  definition: "The chance that an item fails during a given stretch of age, counting only the items that were still working at the start of it."
+
+reliability-centred maintenance:
+  definition: "A way of planning upkeep that chooses each task by how a part actually fails and what the failure would cost, rather than replacing parts on a fixed schedule."
+  aliases: [reliability-centered maintenance, RCM]
+
+annualised failure rate:
+  definition: "The share of devices expected to fail in a year, worked out from how many failed over the time they were in use."
+  aliases: [annualized failure rate, AFR]
