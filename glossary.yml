@@ -947,3 +947,10 @@ reliability-centred maintenance:
 annualised failure rate:
   definition: "The share of devices expected to fail in a year, worked out from how many failed over the time they were in use."
   aliases: [annualized failure rate, AFR]
+
+non-probability sample:
+  definition: "A group of survey respondents chosen by a method, such as volunteering online, that does not give everyone in the population a known chance of being picked."
+  aliases: [non-probability samples, nonprobability sample, non-probability web panels]
+
+adjusted odds:
+  definition: "How the odds of an outcome compare between two groups after a statistical model has tried to remove the influence of other measured differences between them."
