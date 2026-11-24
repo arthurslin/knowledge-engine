@@ -964,3 +964,10 @@ desirable difficulty:
 judgment of learning:
   definition: "A learner's own estimate of how well they have learned something and how likely they are to remember it."
   aliases: [judgments of learning, judgement of learning, judgements of learning]
+multilateral:
+  definition: "Agreed or worked on by many countries together, rather than by one country or a pair."
+incident response team:
+  definition: "A group that a country or organisation relies on to detect, contain and recover from computer security attacks."
+  aliases: [incident response teams]
+kill switch:
+  definition: "A way to shut off a system or cut off access to it quickly in an emergency."
