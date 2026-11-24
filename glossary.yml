@@ -954,3 +954,13 @@ non-probability sample:
 
 adjusted odds:
   definition: "How the odds of an outcome compare between two groups after a statistical model has tried to remove the influence of other measured differences between them."
+
+perceptual disfluency:
+  definition: "The small extra effort of reading something that is visually hard to make out, such as text in an awkward or faint font."
+  aliases: [disfluency, disfluent]
+desirable difficulty:
+  definition: "A kind of effort during learning that feels harder at the time but improves how well material is remembered later."
+  aliases: [desirable difficulties]
+judgment of learning:
+  definition: "A learner's own estimate of how well they have learned something and how likely they are to remember it."
+  aliases: [judgments of learning, judgement of learning, judgements of learning]
