@@ -981,3 +981,9 @@ box-counting:
   definition: "A way to measure a pattern by covering it with grids of ever smaller squares and counting how many squares it touches."
 leave-one-out:
   definition: "A way of testing a prediction method by setting aside one example, training on the rest, checking the prediction for the one left out, and repeating for every example."
+AI companion:
+  definition: "A chatbot built to act like an ongoing friend or partner, for example by remembering past conversations and asking about the user's feelings."
+  aliases: [AI companions]
+civil penalty:
+  definition: "A fine imposed through a non-criminal court case, usually brought by a government official."
+  aliases: [civil penalties]
