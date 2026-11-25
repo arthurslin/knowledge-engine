@@ -971,3 +971,13 @@ incident response team:
   aliases: [incident response teams]
 kill switch:
   definition: "A way to shut off a system or cut off access to it quickly in an emergency."
+fractal:
+  definition: "A pattern that looks similar at many sizes, so a small piece resembles the whole."
+  aliases: [fractals]
+fractal dimension:
+  definition: "A number that describes how completely a pattern fills space as you look at it at finer and finer scales."
+  aliases: [fractal dimensions]
+box-counting:
+  definition: "A way to measure a pattern by covering it with grids of ever smaller squares and counting how many squares it touches."
+leave-one-out:
+  definition: "A way of testing a prediction method by setting aside one example, training on the rest, checking the prediction for the one left out, and repeating for every example."
