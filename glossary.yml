@@ -987,3 +987,19 @@ AI companion:
 civil penalty:
   definition: "A fine imposed through a non-criminal court case, usually brought by a government official."
   aliases: [civil penalties]
+normal mode:
+  definition: "One of the fixed patterns and frequencies at which an object, such as a bell or the whole Earth, naturally vibrates once disturbed."
+  aliases: [normal modes]
+gravimeter:
+  definition: "An instrument that measures tiny changes in the pull of gravity at one spot, including those caused by the ground moving up and down."
+  aliases: [gravimeters]
+millihertz:
+  definition: "A unit of frequency equal to one thousandth of a cycle per second, so one cycle every 1,000 seconds."
+infragravity wave:
+  definition: "A very long, slow ocean wave, with a period of about half a minute to several minutes, produced when groups of ordinary wind waves interact."
+  aliases: [infragravity waves]
+seismic tomography:
+  definition: "A way of mapping the inside of the Earth by measuring how fast vibrations travel along many different paths through it."
+cross-correlation:
+  definition: "A calculation that compares two recordings at many different time offsets to find how much and how closely one echoes the other."
+  aliases: [cross-correlated, cross-correlating]
