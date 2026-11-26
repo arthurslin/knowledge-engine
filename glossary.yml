@@ -1003,3 +1003,10 @@ seismic tomography:
 cross-correlation:
   definition: "A calculation that compares two recordings at many different time offsets to find how much and how closely one echoes the other."
   aliases: [cross-correlated, cross-correlating]
+Convention on Certain Conventional Weapons:
+  definition: "A UN treaty, in force since 1983, under which countries agree on limits for specific weapons such as blinding lasers and landmines through added agreements called protocols."
+lethal autonomous weapons system:
+  definition: "A weapon that, once switched on, can pick out and attack a target without a person approving each strike."
+  aliases: [lethal autonomous weapons systems, lethal autonomous weapons]
+states parties:
+  definition: "The countries that have formally joined a treaty and are bound by it."
