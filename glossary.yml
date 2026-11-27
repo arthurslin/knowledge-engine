@@ -1019,3 +1019,13 @@ pruning:
 initialization:
   definition: "The random starting values a model's adjustable numbers are given before training begins."
   aliases: [initialized, initialisation]
+shadow testing:
+  definition: "Running a new version of a system on copies of real traffic alongside the old one, without customers seeing its results, to check whether the two behave the same."
+integration test:
+  definition: "An automated check that runs several parts of a program together to confirm they work correctly as a whole."
+  aliases: [integration tests]
+regression test:
+  definition: "An automated check written to catch a bug that has already been fixed, so it is noticed if the bug ever returns."
+  aliases: [regression tests]
+time to first token:
+  definition: "How long a user waits after sending a request before an AI model's reply starts to appear."
