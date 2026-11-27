@@ -1010,3 +1010,12 @@ lethal autonomous weapons system:
   aliases: [lethal autonomous weapons systems, lethal autonomous weapons]
 states parties:
   definition: "The countries that have formally joined a treaty and are bound by it."
+neural network:
+  definition: "A computer model built from many simple connected units whose connection strengths are adjusted during training so it learns to map inputs to outputs."
+  aliases: [neural networks]
+pruning:
+  definition: "Deleting many of a trained model's connections, usually the weakest ones, to make it smaller while trying to keep its accuracy."
+  aliases: [pruned]
+initialization:
+  definition: "The random starting values a model's adjustable numbers are given before training begins."
+  aliases: [initialized, initialisation]
